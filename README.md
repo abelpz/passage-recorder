@@ -11,7 +11,7 @@ This is a custom Theia app that allows you to record passages from the Bible as 
 - Play the audio
 - Download the audio
 
-This app starts as a learning project for Theia. We will be documenting the process of building this app and our learnings along the way. The documentation will be published on this repository in the blog directory.
+This app starts as a learning project for Theia. We will be documenting the process of building this app and our learnings along the way. The documentation will be published on this repository in the [blog directory](blog).
 
 ## Technologies Used
 

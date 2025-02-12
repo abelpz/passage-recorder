@@ -7,17 +7,20 @@
   "scripts": {
     "build:browser": "yarn --cwd browser-app bundle",
     "build:electron": "yarn --cwd electron-app bundle",
+    "build:browser-only": "yarn --cwd browser-only bundle",
     "prepare": "lerna run prepare",
     "postinstall": "theia check:theia-version",
     "start:browser": "yarn --cwd browser-app start",
     "start:electron": "yarn --cwd electron-app start",
-    "watch:browser": "lerna run --parallel watch --ignore electron-app",
-    "watch:electron": "lerna run --parallel watch --ignore browser-app"
+    "start:browser-only": "yarn --cwd browser-only start",
+    "watch:browser": "lerna run --parallel watch --scope browser-app",
+    "watch:electron": "lerna run --parallel watch --scope electron-app",
+    "watch:browser-only": "lerna run --parallel watch --scope browser-only"
   },
   "devDependencies": {
     "lerna": "2.4.0"
   },
   "workspaces": [
-     "browser-app", "electron-app", "passage-recorder-main"
+     "browser-app", "electron-app", "passage-recorder-main", "browser-only"
   ]
 }

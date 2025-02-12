@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "name": "browser-only",
+  "version": "0.0.0",
+  "dependencies": {
+    "@theia/core": "1.58.1",
+    "@theia/editor": "1.58.1",
+    "@theia/filesystem": "1.58.1",
+    "@theia/markers": "1.58.1",
+    "@theia/messages": "1.58.1",
+    "@theia/monaco": "1.58.1",
+    "@theia/navigator": "1.58.1",
+    "@theia/preferences": "1.58.1",
+    "@theia/process": "1.58.1",
+    "@theia/terminal": "1.58.1",
+    "@theia/workspace": "1.58.1",
+    "passage-recorder-main": "*"
+  },
+  "devDependencies": {
+    "@theia/cli": "1.58.1"
+  },
+  "scripts": {
+    "rebuild": "tsc -b -w --preserveWatchOutput",
+    "bundle": "theia build --mode development",
+    "start": "theia start",
+    "clean": "theia clean",
+    "watch": "yarn rebuild && theia build --watch --mode development"
+  },
+  "theia": {
+    "target": "browser-only",
+     "frontend": {
+      "config": {
+        "applicationName": "Passage Recorder",
+        "preferences": {
+          "files.enableTrash": false
+        }
+      }
+    }
+  }
+}

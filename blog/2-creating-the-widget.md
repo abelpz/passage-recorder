@@ -122,4 +122,4 @@ You can import a react component and render it in the widget. Creating the conte
 
 ## Next Steps
 
-- [Create a new Widget](3-creating-the-widget.md)
+- [Create a browser-only app](3-creating-the-browser-only-app.md)

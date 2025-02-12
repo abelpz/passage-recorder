@@ -7,7 +7,7 @@
     "beforeDevCommand": "cd ../browser-only && yarn start",
     "devUrl": "http://localhost:3000",
     "beforeBuildCommand": "cd ../browser-only && yarn bundle",
-    "frontendDist": "../browser-only/lib/frontend"
+    "frontendDist": "../../browser-only/lib/frontend"
   },
   "app": {
     "withGlobalTauri": true,

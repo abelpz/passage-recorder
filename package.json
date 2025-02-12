@@ -15,7 +15,11 @@
     "start:browser-only": "yarn --cwd browser-only start",
     "watch:browser": "lerna run --parallel watch --scope browser-app",
     "watch:electron": "lerna run --parallel watch --scope electron-app",
-    "watch:browser-only": "lerna run --parallel watch --scope browser-only"
+    "watch:browser-only": "lerna run --parallel watch --scope browser-only",
+    "start:tauri": "yarn --cwd tauri-app start",
+    "build:tauri": "yarn --cwd tauri-app build",
+    "start:android": "yarn --cwd tauri-app tauri android dev",
+    "build:android": "yarn --cwd tauri-app tauri android build"
   },
   "devDependencies": {
     "lerna": "2.4.0"

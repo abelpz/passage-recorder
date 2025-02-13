@@ -4,4 +4,6 @@ lib
 *-app/*
 !*-app/package.json
 !tauri-app/*
+browser-only/*
+!browser-only/package.json
 node_modules

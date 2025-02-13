@@ -3,7 +3,7 @@ lib
 *.log
 *-app/*
 !*-app/package.json
-!tauri-app/*
 browser-only/*
 !browser-only/package.json
+!tauri-app/*
 node_modules

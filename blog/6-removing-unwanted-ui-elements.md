@@ -40,11 +40,11 @@ Update the browser-only app's `package.json` to remove unwanted contributions al
 ```
 
 Removing the "@theia/navigator" dependency will remove the file explorer sidebar widget.
-see the current dependencies in the [browser-only/package.json](browser-only/package.json) file to see a narrowed down list of official theia dependencies.
+see the current dependencies in the [browser-only/package.json](../browser-only/package.json) file to see a narrowed down list of official theia dependencies.
 
 ### Create a filter contribution to remove unwanted contributions
 
-see the [passage-recorded-filter-contribution.ts](passage-recorder-main/src/browser/passage-recorded-filter-contribution.ts) file to see an example of a filter contribution that removes unwanted contributions.
+see the [passage-recorded-filter-contribution.ts](../passage-recorder-main/src/browser/passage-recorded-filter-contribution.ts) file to see an example of a filter contribution that removes unwanted contributions.
 
 In our case we want to remove the outline view contribution and the outline view service.
 

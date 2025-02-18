@@ -51,6 +51,7 @@ In our case we want to remove the outline view contribution and the outline view
 ## Sources
 
 - [Theia Filter Contributions](https://theia-ide.org/docs/contribution_filter/)
+- [Sample Filter Contribution](https://github.com/eclipse-theia/theia/blob/32ed77fa7fea9503be9b6f0b95247d04fccb83a9/examples/api-samples/src/browser/contribution-filter/sample-filtered-command-contribution.ts)
 - [Removing Unwanted UI Elements](https://github.com/eclipse-theia/theia/discussions/12676#discussioncomment-6332817)
 - [Theia Core Preferences](https://github.com/eclipse-theia/theia/blob/32ed77fa7fea9503be9b6f0b95247d04fccb83a9/packages/core/src/browser/core-preferences.ts)
 

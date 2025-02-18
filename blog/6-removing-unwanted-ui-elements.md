@@ -23,7 +23,7 @@ Update the browser-only app's `package.json` to disable unnecessary features:
 }
 ```
 
-this will hide the menu bar and status bar in the browser-only app, it will not remove them from the bundle since they are still needed for Theia to work properly.
+this will hide the menu bar and status bar in the browser-only app, it will not remove them from the bundle since they are still needed for Theia to work properly. Check the [browser-only/package.json](../browser-only/package.json) file to see the changes made to the `theia.frontend.config.preferences` object.
 
 ### Remove unnecessary dependencies
 

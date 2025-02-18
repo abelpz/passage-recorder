@@ -62,7 +62,7 @@ function FileSystemTest() {
 
   return (
     <main className="container">
-      <h1>Tauri File CRUD Example</h1>
+      <h1>Tauri File CRUD Example For Theia</h1>
 
       <div className="row" style={{ gap: '10px', marginBottom: '20px' }}>
         <button onClick={createFile}>Create File</button>

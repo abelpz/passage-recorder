@@ -10,7 +10,6 @@
     "@theia/filesystem": "1.58.1",
     "@theia/markers": "1.58.1",
     "@theia/messages": "1.58.1",
-    "@theia/monaco": "1.58.1",
     "@theia/navigator": "1.58.1",
     "@theia/preferences": "1.58.1",
     "@theia/process": "1.58.1",
@@ -29,6 +28,15 @@
     "watch": "yarn rebuild && theia build --watch --mode development"
   },
   "theia": {
-    "target": "electron"
+    "target": "electron",
+    "frontend": {
+      "config": {
+        "preferences": {
+          "files.enableTrash": false,
+          "window.menuBarVisibility": "compact",
+          "workbench.statusBar.visible": false
+        }
+      }
+    }
   }
 }

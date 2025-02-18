@@ -120,4 +120,4 @@ remember to rebuild the widget and the app before running tauri dev to test the 
 
 ## Next Steps
 
-- [Adding a Database](6-adding-a-database.md)
+- [Removing unnecessary contributions](6-removing-unnecessary-contributions.md)

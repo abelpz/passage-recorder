@@ -20,11 +20,13 @@
   },
   "theia": {
     "target": "browser-only",
-     "frontend": {
+    "frontend": {
       "config": {
         "applicationName": "Passage Recorder",
         "preferences": {
-          "files.enableTrash": false
+          "files.enableTrash": false,
+          "window.menuBarVisibility": "compact",
+          "workbench.statusBar.visible": false
         }
       }
     }

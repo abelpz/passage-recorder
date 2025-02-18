@@ -30,7 +30,8 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/passage-recorder-main-frontend-module"
+      "frontend": "lib/browser/passage-recorder-main-frontend-module",
+      "frontendOnly": "lib/browser/passage-recorder-main-frontend-module"
     }
   ]
 }

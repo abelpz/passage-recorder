@@ -1,0 +1,10 @@
+{
+  "appId": "com.passagerecorder.app",
+  "appName": "passage-recorder",
+  "webDir": "../browser-only/lib/frontend",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true
+    }
+  }
+}

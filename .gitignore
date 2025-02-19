@@ -6,4 +6,5 @@ lib
 browser-only/*
 !browser-only/package.json
 !tauri-app/*
+!capacitor-app/*
 node_modules

@@ -1,0 +1,72 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Watch browser",
+            "dependsOn": [
+                "Watch passage-recorder-main",
+                "Watch browser-only"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Watch All",
+            "dependsOn": [
+                "Watch passage-recorder-main",
+                "Watch browser-app",
+                "Watch browser-only"
+            ],
+            "group": {
+                "kind": "build"
+            }
+        },
+        {
+            "label": "Watch passage-recorder-main",
+            "type": "shell",
+            "command": "yarn",
+            "args": ["--cwd", "passage-recorder-main", "watch"],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "group": "watchers"
+            },
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "label": "Watch browser-app",
+            "type": "shell",
+            "command": "yarn",
+            "args": ["--cwd", "browser-app", "watch"],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "group": "watchers"
+            },
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "label": "Watch browser-only",
+            "type": "shell",
+            "command": "yarn",
+            "args": ["--cwd", "browser-only", "watch"],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "group": "watchers"
+            },
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        }
+    ]
+} 

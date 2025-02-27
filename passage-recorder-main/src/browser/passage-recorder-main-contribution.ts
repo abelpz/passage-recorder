@@ -22,7 +22,7 @@ export class PassageRecorderMainContribution extends AbstractViewContribution<Pa
         super({
             widgetId: PassageRecorderMainWidget.ID,
             widgetName: PassageRecorderMainWidget.LABEL,
-            defaultWidgetOptions: { area: 'main', mode: 'tab-replace',  },
+            defaultWidgetOptions: { area: 'bottom', mode: 'tab-before',   },
             toggleCommandId: PassageRecorderMainCommand.id,
         });
     }

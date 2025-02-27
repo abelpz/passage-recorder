@@ -12,8 +12,8 @@
     "@theia/cli": "1.58.1"
   },
   "scripts": {
-    "rebuild": "tsc -b -w --preserveWatchOutput",
-    "bundle": "theia build --mode development",
+    "rebuild": "theia rebuild:browser --cacheRoot ..",
+    "bundle": "yarn rebuild && theia build --mode development",
     "start": "theia start",
     "clean": "theia clean",
     "watch": "yarn rebuild && theia build --watch --mode development"

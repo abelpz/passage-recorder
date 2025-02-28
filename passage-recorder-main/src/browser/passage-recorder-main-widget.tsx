@@ -32,6 +32,9 @@ export class PassageRecorderMainWidget extends ReactWidget {
     protected previewUrl: string | null = null;
     protected audioElement: HTMLAudioElement | null = null;
     protected isPlaying: boolean = false;
+    protected analyser: AnalyserNode | null = null;
+    protected animationFrameId: number | null = null;
+    protected canvasRef = React.createRef<HTMLCanvasElement>();
 
     @postConstruct()
     protected init(): void {
@@ -67,6 +70,17 @@ export class PassageRecorderMainWidget extends ReactWidget {
                 }
             });
 
+            console.log('Audio stream obtained');
+
+            // Set up audio analyzer
+            const audioContext = new AudioContext();
+            const source = audioContext.createMediaStreamSource(this.stream);
+            this.analyser = audioContext.createAnalyser();
+            this.analyser.fftSize = 2048;
+            source.connect(this.analyser);
+
+            console.log('Audio analyzer set up');
+
             this.mediaRecorder = new MediaRecorder(this.stream, {
                 mimeType: 'audio/webm;codecs=opus'
             });
@@ -92,12 +106,24 @@ export class PassageRecorderMainWidget extends ReactWidget {
                     this.audioElement.src = this.previewUrl;
                 }
                 this.recording = false;
+                this.stopWaveformVisualization();
                 this.update();
             };
 
+            // Start recording
             this.mediaRecorder.start();
+            
+            // Update the UI first
             this.update();
+            
+            // Wait a moment for the canvas to be visible before starting visualization
+            setTimeout(() => {
+                console.log('Starting visualization after delay');
+                this.startWaveformVisualization();
+            }, 100);
+
         } catch (error) {
+            console.error('Error in startRecording:', error);
             this.messageService.error(`Error starting recording: ${error}`);
         }
     }
@@ -109,6 +135,7 @@ export class PassageRecorderMainWidget extends ReactWidget {
                 this.stream.getTracks().forEach(track => track.stop());
                 this.stream = null;
             }
+            this.stopWaveformVisualization();
         }
     };
 
@@ -182,6 +209,129 @@ export class PassageRecorderMainWidget extends ReactWidget {
         this.update();
     }
 
+    protected startWaveformVisualization = (): void => {
+        console.log('Starting waveform visualization');
+        if (!this.analyser || !this.canvasRef.current) {
+            console.log('Missing analyser or canvas:', { 
+                hasAnalyser: !!this.analyser, 
+                hasCanvas: !!this.canvasRef.current 
+            });
+            return;
+        }
+
+        const canvas = this.canvasRef.current;
+        const canvasCtx = canvas.getContext('2d');
+        if (!canvasCtx) {
+            console.log('Failed to get canvas context');
+            return;
+        }
+
+        // Set initial canvas size
+        canvas.width = canvas.offsetWidth || 800;
+        canvas.height = canvas.offsetHeight || 120;
+        console.log('Canvas dimensions:', { width: canvas.width, height: canvas.height });
+
+        const bufferLength = this.analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const draw = () => {
+            if (!this.recording || !this.analyser || !canvasCtx) {
+                console.log('Stopping animation frame - missing required objects');
+                return;
+            }
+
+            this.animationFrameId = requestAnimationFrame(draw);
+
+            this.analyser.getByteTimeDomainData(dataArray);
+
+            // Get theme colors
+            const backgroundColor = getComputedStyle(document.documentElement)
+                .getPropertyValue('--theia-editor-background')
+                .trim() || '#1e1e1e';
+            const foregroundColor = getComputedStyle(document.documentElement)
+                .getPropertyValue('--theia-editor-foreground')
+                .trim() || '#cccccc';
+
+            // Clear the canvas
+            canvasCtx.fillStyle = backgroundColor;
+            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the waveform
+            canvasCtx.lineWidth = 2;
+            canvasCtx.strokeStyle = foregroundColor;
+            canvasCtx.beginPath();
+
+            const sliceWidth = canvas.width * 1.0 / bufferLength;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = (v * canvas.height / 2) + (canvas.height / 2);
+
+                if (i === 0) {
+                    canvasCtx.moveTo(x, y);
+                } else {
+                    canvasCtx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            canvasCtx.stroke();
+        };
+
+        // Start the animation
+        console.log('Starting animation loop');
+        draw();
+    };
+
+    protected stopWaveformVisualization = (): void => {
+        if (this.animationFrameId !== null) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+
+        // Clear the canvas
+        const canvas = this.canvasRef.current;
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+    };
+
+    protected onAfterAttach(msg: Message): void {
+        super.onAfterAttach(msg);
+        
+        const setupCanvas = () => {
+            console.log('Setting up canvas');
+            const canvas = this.canvasRef.current;
+            if (canvas) {
+                // Force a minimum size if offsetWidth/offsetHeight are 0
+                canvas.width = canvas.offsetWidth || 800;
+                canvas.height = canvas.offsetHeight || 120;
+                console.log('Canvas dimensions set to:', { 
+                    width: canvas.width, 
+                    height: canvas.height,
+                    offsetWidth: canvas.offsetWidth,
+                    offsetHeight: canvas.offsetHeight
+                });
+            } else {
+                console.log('Canvas ref not available');
+            }
+        };
+
+        // Initial setup
+        setupCanvas();
+        
+        // Handle window resize
+        window.addEventListener('resize', setupCanvas);
+        
+        // Also try setting up after a short delay to ensure container is ready
+        setTimeout(setupCanvas, 100);
+    }
+
     render(): React.ReactElement {
         return (
             <div id='passage-recorder-container'>
@@ -205,10 +355,14 @@ export class PassageRecorderMainWidget extends ReactWidget {
                         title={this.recording ? 'Stop recording' : 'Start recording'}
                     >
                         {this.recording ? 
-                            <Square className="icon" size={24} /> : 
-                            <Mic className="icon" size={24} />
+                            <Square className="icon" size={28} /> : 
+                            <Mic className="icon" size={28} />
                         }
                     </button>
+                </div>
+                {/* Always render the canvas but control visibility with CSS */}
+                <div className={`waveform-container ${this.recording ? 'visible' : ''}`}>
+                    <canvas ref={this.canvasRef} className='waveform-canvas' />
                 </div>
                 {this.recording && (
                     <div className='recording-indicator'>
@@ -219,7 +373,7 @@ export class PassageRecorderMainWidget extends ReactWidget {
                     <div className='preview-controls'>
                         <div className='preview-header'>
                             <Headphones className="icon" size={24} /> Preview Recording
-                        </div>
+        </div>
                         <div className='preview-buttons'>
                             <button
                                 className={`preview-button icon-button ${this.isPlaying ? 'playing' : ''}`}

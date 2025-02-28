@@ -10,7 +10,8 @@
   ],
   "dependencies": {
     "@theia/core": "1.58.1",
-    "lucide-react": "^0.476.0"
+    "lucide-react": "^0.476.0",
+    "wavesurfer.js": "7"
   },
   "devDependencies": {
     "@tauri-apps/plugin-fs": "~2",

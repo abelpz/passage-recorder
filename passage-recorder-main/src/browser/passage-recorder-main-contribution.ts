@@ -22,7 +22,7 @@ export class PassageRecorderMainContribution extends AbstractViewContribution<Pa
         super({
             widgetId: PassageRecorderMainWidget.ID,
             widgetName: PassageRecorderMainWidget.LABEL,
-            defaultWidgetOptions: { area: 'bottom', mode: 'tab-before',   },
+            defaultWidgetOptions: { area: 'main', mode: 'tab-before',   },
             toggleCommandId: PassageRecorderMainCommand.id,
         });
     }
@@ -30,6 +30,12 @@ export class PassageRecorderMainContribution extends AbstractViewContribution<Pa
     @inject(FrontendApplicationStateService)
    protected readonly stateService: FrontendApplicationStateService;
     
+    /**
+     * This function is called when the application starts.
+     * It opens the widget when the application is ready.
+     * @param app
+     * @returns
+     */
     onStart(app: FrontendApplication): Promise<void> {
         this.stateService.reachedState('ready').then(
            () => this.openView({ reveal: true })

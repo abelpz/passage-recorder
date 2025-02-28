@@ -25,7 +25,6 @@
         "applicationName": "Passage Recorder",
         "preferences": {
           "files.enableTrash": false,
-          "window.menuBarVisibility": "compact",
           "workbench.statusBar.visible": false
         }
       }

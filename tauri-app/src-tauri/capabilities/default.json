@@ -61,6 +61,18 @@
     "fs:allow-video-write",
     "fs:allow-video-write-recursive",
     "fs:write-all",
-    "fs:write-files"
+    "fs:write-files",
+     {
+      "identifier": "fs:read-files",
+      "allow": [{ "path": "**/*" }]
+    },
+    {
+      "identifier": "fs:allow-watch",
+      "allow": [{ "path": "**/*" }]
+    },
+    {
+      "identifier": "fs:allow-unwatch",
+      "allow": [{ "path": "**/*" }]
+    }
   ]
 }
